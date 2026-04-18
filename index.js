@@ -15,10 +15,10 @@ const MUSIC_SRC = "./kalapastangan2.mp3";
 // Add as many image paths as you like.
 // These appear as soft floating photos on the landing page.
 const FLOAT_IMAGES = [
-    "./img1.jpg",
-    "./img2.jpg",
-    "./img3.jpg",
-    "./img4.jpg",
+    "img1.jpg",
+    "img2.jpg",
+    "img3.jpg",
+    "img4.jpg",
 ];
 
 // ── Timeline ──────────────────────────────────────────────────
@@ -28,22 +28,22 @@ const TIMELINE = [
     {
         title: "The First Time We Met",
         text: "It was just an ordinary church date, nothing special. No flirting—just a pure and genuine first step in getting to know each other. That was the day I told myself I would take care of you, forever.",
-        image: "./img1.jpg"
+        image: "img1.jpg"
     },
     {
         title: "Random Date",
         text: "I remember this random date of our's. Like, it's unexpectedI still remember our unexpected date—the way we just hung out outside the museum. Then out of nowhere, the Tamaraw lit up, WHAHAHAHAHA. I’ll never forget how startled I was, and even more, how happy you looked watching me react. It was such a simple moment, but it felt so real—like that’s when I truly realized how beautiful it is to love in a way that’s simple, yet genuine.",
-        image: "./img2.jpg"
+        image: "img2.jpg"
     },
     {
         title: "The Moment I Knew",
         text: "This day, I already knew that we are the one for each other. Like, I realized it on how we try our best to be better for each other. You're trying to learn how to communicate your feelings properly, and I'm learning how to be more patient and understanding for you. Like from this moment, when you opened up about felling out of love and still not giving up on our relationship. This is the very day I've said myself, that you're already the one.",
-        image: "./img3.jpg"
+        image: "img3.jpg"
     },
     {
         title: "One Year With You",
         text: "And here we are. A whole year of choosing each other, again and again. I would choose you a thousand times more. This is only the beginning.",
-        image: "./img4.jpg"
+        image: "img4.jpg"
     },
 ];
 
