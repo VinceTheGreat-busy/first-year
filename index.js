@@ -9,7 +9,7 @@ const BEGIN_BTN_LABEL = "Begin Our Story";          // button label
 
 // ── Music ────────────────────────────────────────────────────
 // Drop your MP3 in the same folder and set its filename here:
-const MUSIC_SRC = "./kalapastangan2.mp3";
+const MUSIC_SRC = "./kalapastangan2.MP3";
 
 // ── Floating background images ───────────────────────────────
 // Add as many image paths as you like.
