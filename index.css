@@ -1,0 +1,785 @@
+/* ============================================================
+   CSS VARIABLES & RESET
+   ============================================================ */
+:root {
+  --gold: #d4af37;
+  --gold-light: #e8d080;
+  --gold-dark: #a88b1a;
+  --beige: #f5f5dc;
+  --beige-deep: #ede8cc;
+  --cream: #fffdf4;
+  --warm-dark: #1a160a;
+  --warm-mid: #3c3220;
+  --text-main: #2c2416;
+  --text-light: #7a6a50;
+  --glass-bg: rgba(255, 253, 244, 0.12);
+  --glass-border: rgba(212, 175, 55, 0.3);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Jost", sans-serif;
+  background: var(--beige);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ============================================================
+   NOISE TEXTURE OVERLAY
+   ============================================================ */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.5;
+}
+
+/* ============================================================
+   SCREENS
+   ============================================================ */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease;
+}
+
+.screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(1.04);
+}
+
+/* ============================================================
+   FLOATING IMAGES
+   ============================================================ */
+#float-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.float-img {
+  position: absolute;
+  border-radius: 12px;
+  object-fit: cover;
+  opacity: 0;
+  filter: sepia(30%) brightness(0.88);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  transition: opacity 2s ease;
+  animation: floatDrift 18s ease-in-out infinite;
+}
+
+@keyframes floatDrift {
+  0% {
+    transform: translateY(0px) rotate(var(--rot));
+  }
+
+  50% {
+    transform: translateY(-18px) rotate(calc(var(--rot) + 1.5deg));
+  }
+
+  100% {
+    transform: translateY(0px) rotate(var(--rot));
+  }
+}
+
+/* ============================================================
+   LANDING SCREEN
+   ============================================================ */
+#landing {
+  z-index: 10;
+  background: transparent;
+}
+
+.landing-inner {
+  text-align: center;
+  z-index: 2;
+  position: relative;
+  padding: 2rem;
+}
+
+/* radial glow behind the center content */
+.landing-inner::before {
+  content: "";
+  position: absolute;
+  inset: -80px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(245, 245, 220, 0.85) 0%,
+    transparent 70%
+  );
+  z-index: -1;
+}
+
+.landing-eyebrow {
+  font-family: "Jost", sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: 1.4rem;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.4s forwards;
+}
+
+.landing-title {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(2.8rem, 7vw, 5.2rem);
+  line-height: 1.1;
+  color: var(--warm-dark);
+  letter-spacing: -0.01em;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.7s forwards;
+  margin-bottom: 0.4rem;
+}
+
+.landing-sub {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  color: var(--text-light);
+  opacity: 0;
+  animation: fadeUp 1s ease 1s forwards;
+  margin-bottom: 2.8rem;
+}
+
+.divider {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0 auto 2.8rem;
+  opacity: 0;
+  animation: fadeUp 1s ease 1.1s forwards;
+}
+
+/* ── BEGIN BUTTON ── */
+.begin-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem 2.6rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+  animation: fadeUp 1s ease 1.4s forwards;
+  outline: none;
+}
+
+.begin-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50px;
+  border: 1px solid var(--gold);
+  transition: all 0.4s ease;
+}
+
+.begin-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.begin-btn:hover::after {
+  transform: scaleX(1);
+}
+
+.begin-btn:hover .btn-text {
+  color: var(--warm-dark);
+}
+
+.begin-btn:hover .btn-icon {
+  color: var(--warm-dark);
+  transform: translateX(4px);
+}
+
+.btn-text {
+  font-family: "Jost", sans-serif;
+  font-weight: 400;
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--warm-dark);
+  position: relative;
+  z-index: 1;
+  transition: color 0.4s ease;
+}
+
+.btn-icon {
+  font-size: 1rem;
+  color: var(--gold);
+  position: relative;
+  z-index: 1;
+  transition:
+    color 0.4s ease,
+    transform 0.4s ease;
+}
+
+/* Pulse ring behind button */
+.btn-pulse {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  animation: btnPulse 2.5s ease-in-out 2.5s infinite;
+}
+
+@keyframes btnPulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+}
+
+/* ============================================================
+   STORY SCREEN
+   ============================================================ */
+#story {
+  z-index: 5;
+  background: linear-gradient(160deg, #1a160a 0%, #2c2010 50%, #1a140a 100%);
+  padding: 2rem 1rem;
+}
+
+/* subtle gold vignette */
+#story::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── PROGRESS DOTS ── */
+.progress-bar {
+  position: fixed;
+  top: 1.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.55rem;
+  z-index: 20;
+  align-items: center;
+}
+
+.prog-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.25);
+  transition: all 0.4s ease;
+}
+
+.prog-dot.active {
+  background: var(--gold);
+  transform: scale(1.4);
+}
+
+.prog-dot.done {
+  background: rgba(212, 175, 55, 0.55);
+}
+
+/* ── MEMORY CARD ── */
+.memory-wrap {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.memory-card {
+  width: 100%;
+  background: rgba(255, 253, 244, 0.055);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(212, 175, 55, 0.2);
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.memory-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.memory-img-wrap {
+  width: 100%;
+  height: clamp(200px, 36vw, 340px);
+  position: relative;
+  overflow: hidden;
+}
+
+.memory-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(15%) brightness(0.9) contrast(1.05);
+  transition: transform 8s ease;
+}
+
+.memory-card.show .memory-img-wrap img {
+  transform: scale(1.06);
+}
+
+/* golden bar at top of image */
+.memory-img-wrap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  z-index: 2;
+}
+
+/* overlay gradient on image */
+.memory-img-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 55%,
+    rgba(26, 22, 10, 0.7) 100%
+  );
+  z-index: 1;
+}
+
+.memory-body {
+  padding: clamp(1.4rem, 4vw, 2.6rem);
+  position: relative;
+}
+
+.mem-chapter {
+  font-family: "Jost", sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+}
+
+.mem-title {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.7rem, 4.5vw, 2.6rem);
+  color: var(--cream);
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.mem-text {
+  font-family: "Jost", sans-serif;
+  font-weight: 300;
+  font-size: clamp(0.88rem, 2vw, 1rem);
+  line-height: 1.8;
+  color: rgba(255, 253, 244, 0.7);
+  max-width: 54ch;
+}
+
+/* typewriter cursor */
+.mem-text .cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--gold);
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: blink 0.8s step-end infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ── NAV BUTTONS ── */
+.story-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.6rem;
+  z-index: 10;
+  position: relative;
+}
+
+.nav-btn {
+  font-family: "Jost", sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  cursor: pointer;
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--gold);
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+  outline: none;
+}
+
+.nav-btn:hover {
+  background: var(--gold);
+  color: var(--warm-dark);
+}
+
+.nav-btn.primary {
+  background: var(--gold);
+  color: var(--warm-dark);
+}
+
+.nav-btn.primary:hover {
+  background: var(--gold-light);
+}
+
+/* ============================================================
+   LETTER SCREEN
+   ============================================================ */
+#letter {
+  z-index: 5;
+  background: linear-gradient(160deg, #1a160a 0%, #2c2010 50%, #1a140a 100%);
+  padding: 2rem 1rem;
+  overflow-y: auto;
+  align-items: flex-start; /* don't center vertically — content may overflow */
+  justify-content: flex-start;
+}
+
+#letter::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.letter-wrap {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  margin: auto; /* centers horizontally */
+  min-height: 100%; /* allows centering when short, scrolling when tall */
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.letter-eyebrow {
+  font-family: "Jost", sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.4rem;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.3s;
+}
+
+.letter-eyebrow.show {
+  opacity: 1;
+}
+
+.letter-card {
+  width: 100%;
+  background: rgba(255, 253, 244, 0.06);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 20px;
+  padding: clamp(2rem, 6vw, 3.6rem);
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.1),
+    0 40px 100px rgba(0, 0, 0, 0.55),
+    0 0 60px rgba(212, 175, 55, 0.07);
+  position: relative;
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s ease 0.5s,
+    transform 0.8s ease 0.5s;
+  animation: letterGlow 4s ease-in-out infinite alternate;
+}
+
+.letter-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes letterGlow {
+  0% {
+    box-shadow:
+      0 0 0 1px rgba(212, 175, 55, 0.1),
+      0 40px 100px rgba(0, 0, 0, 0.55),
+      0 0 40px rgba(212, 175, 55, 0.06);
+  }
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(212, 175, 55, 0.22),
+      0 40px 100px rgba(0, 0, 0, 0.55),
+      0 0 80px rgba(212, 175, 55, 0.14);
+  }
+}
+
+/* Corner ornaments */
+.letter-card::before,
+.letter-card::after {
+  content: "✦";
+  position: absolute;
+  color: var(--gold);
+  font-size: 0.9rem;
+  opacity: 0.5;
+}
+.letter-card::before {
+  top: 1.2rem;
+  left: 1.5rem;
+}
+.letter-card::after {
+  bottom: 1.2rem;
+  right: 1.5rem;
+}
+
+.letter-top-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin-bottom: 2rem;
+}
+
+.letter-salutation {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  color: var(--gold-light);
+  margin-bottom: 1.6rem;
+}
+
+.letter-body {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 300;
+  font-size: clamp(1rem, 2.2vw, 1.18rem);
+  line-height: 1.95;
+  color: rgba(255, 253, 244, 0.82);
+  margin-bottom: 2rem;
+  white-space: pre-line;
+}
+
+.letter-bottom-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin-bottom: 2rem;
+}
+
+.letter-sign {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+  color: rgba(255, 253, 244, 0.6);
+  text-align: right;
+}
+
+.letter-sign strong {
+  display: block;
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  color: var(--gold-light);
+  font-weight: 400;
+}
+
+/* replay btn */
+.replay-btn {
+  font-family: "Jost", sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  cursor: pointer;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: transparent;
+  color: rgba(212, 175, 55, 0.7);
+  transition: all 0.35s ease;
+  outline: none;
+  margin-top: 1.8rem;
+  opacity: 0;
+  transition:
+    opacity 0.6s ease 1.4s,
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.replay-btn.show {
+  opacity: 1;
+}
+
+.replay-btn:hover {
+  background: var(--gold);
+  color: var(--warm-dark);
+  border-color: var(--gold);
+}
+
+/* ============================================================
+   FLOATING HEARTS (LETTER SCENE)
+   ============================================================ */
+.heart-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.heart {
+  position: absolute;
+  bottom: -60px;
+  font-size: 1.1rem;
+  opacity: 0;
+  animation: riseHeart 6s ease-in forwards;
+}
+
+@keyframes riseHeart {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+
+  15% {
+    opacity: 0.7;
+  }
+
+  85% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-110vh) scale(1.2) rotate(20deg);
+  }
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.3);
+  border-radius: 4px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 480px) {
+  .mem-text {
+    font-size: 0.85rem;
+  }
+
+  .story-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .letter-card {
+    padding: 1.6rem;
+  }
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Story</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+    <!-- ====================================================
+ AUDIO (replace music.mp3 with your audio file)
+ ==================================================== -->
+    <audio id="bgm" src="./assets/kalapastangan2.mp3" loop></audio>
+    <!-- ====================================================
+ FLOATING IMAGE LAYER (shared across scenes)
+ ==================================================== -->
+    <div id="float-layer"></div>
+    <!-- ====================================================
+ SCREEN 1: LANDING
+ ==================================================== -->
+    <div class="screen" id="landing">
+        <div class="landing-inner">
+            <p class="landing-eyebrow">A love story</p>
+            <h1 class="landing-title" id="landing-title">Once Upon<br />a Time</h1>
+            <p class="landing-sub" id="landing-sub">Two hearts. One beautiful journey.</p>
+            <div class="divider"></div>
+            <button class="begin-btn" id="begin-btn" onclick="beginStory()">
+                <div class="btn-pulse"></div>
+                <span class="btn-text" id="begin-btn-label">Begin Our Story</span>
+                <span class="btn-icon">→</span>
+            </button>
+        </div>
+    </div>
+    <!-- ====================================================
+ SCREEN 2: STORY TIMELINE
+ ==================================================== -->
+    <div class="screen hidden" id="story">
+        <!-- Progress dots (injected by JS) -->
+        <div class="progress-bar" id="progress-bar"></div>
+        <div class="memory-wrap">
+            <div class="memory-card" id="memory-card">
+                <div class="memory-img-wrap">
+                    <img id="mem-img" src="" alt="Memory" />
+                </div>
+                <div class="memory-body">
+                    <p class="mem-chapter" id="mem-chapter">Chapter 1</p>
+                    <h2 class="mem-title" id="mem-title"></h2>
+                    <p class="mem-text" id="mem-text"></p>
+                </div>
+            </div>
+            <div class="story-nav" id="story-nav">
+                <button class="nav-btn primary" id="next-btn" onclick="nextMemory()">
+                    Next Memory →
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- ====================================================
+ SCREEN 3: LOVE LETTER
+ ==================================================== -->
+    <div class="screen hidden" id="letter">
+        <div class="heart-layer" id="heart-layer"></div>
+        <div class="letter-wrap">
+            <p class="letter-eyebrow" id="letter-eyebrow">A letter for you</p>
+            <div class="letter-card" id="letter-card">
+                <div class="letter-top-line"></div>
+                <p class="letter-salutation" id="letter-salutation"></p>
+                <p class="letter-body" id="letter-body"></p>
+                <div class="letter-bottom-line"></div>
+                <div class="letter-sign" id="letter-sign"></div>
+            </div>
+            <button class="replay-btn" id="replay-btn" onclick="replayStory()">
+                ↩ Replay Our Story
+            </button>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+
+</body>
+
+</html>
